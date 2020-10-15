@@ -10,6 +10,8 @@ var (
 	UserDeleted UserStatus = 2
 	//UserBlocked is used for users that have been blocked by staff members
 	UserBlocked UserStatus = 3
+	//UserPendding is used for users that waiting for approve
+	UserPendding UserStatus = 4
 )
 
 var userStatusIDs = map[UserStatus]string{

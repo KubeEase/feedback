@@ -152,6 +152,11 @@
         "step3Title": "3. Review",
         "step3Message": "Make sure information provided above is correct."
     },
+    "signInControl": {
+        "neverYourBehalf": "We will never post to these accounts on your behalf.",
+        "enterEmail": "Enter your email address to sign up",
+        "or": "OR"
+    },
     "common": {
         "button": {
             "submit": "Submit",
@@ -162,7 +167,8 @@
             "delete": "Delete",
             "close": "Close",
             "unsubscribe": "Unsubscribe",
-            "subscribe": "Subscribe"
+            "subscribe": "Subscribe",
+            "signUp": "Sign up"
         },
         "placeholder": {
             "search": "Search..."

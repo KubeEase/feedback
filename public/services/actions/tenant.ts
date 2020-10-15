@@ -54,6 +54,13 @@ export const signIn = async (email: string): Promise<Result> => {
   });
 };
 
+export const register = async (email: string): Promise<Result> => {
+  return await http.post("/_api/register", {
+    email
+  });
+};
+
+
 export const completeProfile = async (key: string, name: string): Promise<Result> => {
   return await http.post("/_api/signin/complete", {
     key,

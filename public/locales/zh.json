@@ -152,6 +152,11 @@
         "step3Title": "3. 复审",
         "step3Message": "确保上面提供的信息正确。"
     },
+    "signInControl": {
+        "neverYourBehalf": "我们将永远不会以你的名义使用这些帐户。",
+        "enterEmail": "填写注册邮箱",
+        "or": "或者"
+    },
     "common": {
         "button": {
             "submit": "提交",
@@ -162,7 +167,8 @@
             "delete": "删除",
             "close": "关闭",
             "unsubscribe": "取消订阅",
-            "subscribe": "订阅"
+            "subscribe": "订阅",
+            "signUp": "注册"
         },
         "placeholder": {
             "search": "搜索..."

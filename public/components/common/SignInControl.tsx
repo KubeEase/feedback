@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { SocialSignInButton, Form, Button, Input, Message } from "@fider/components";
 import { device, actions, Failure, isCookieEnabled } from "@fider/services";
 import { useFider } from "@fider/hooks";
+import { useTranslation } from "react-i18next";
 
 interface SignInControlProps {
   useEmail: boolean;
@@ -13,6 +14,7 @@ interface SignInControlProps {
 
 export const SignInControl: React.FunctionComponent<SignInControlProps> = props => {
   const fider = useFider();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<Failure | undefined>(undefined);
 
@@ -49,24 +51,23 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               <React.Fragment key={o.provider}>
                 {i % 4 === 0 && <div className="col-lf" />}
                 <div
-                  className={`col-sm l-provider-${o.provider} l-social-col ${
-                    providersLen === 1 ? "l-social-col-100" : ""
-                  }`}
+                  className={`col-sm l-provider-${o.provider} l-social-col ${providersLen === 1 ? "l-social-col-100" : ""
+                    }`}
                 >
                   <SocialSignInButton option={o} redirectTo={props.redirectTo} />
                 </div>
               </React.Fragment>
             ))}
           </div>
-          <p className="info">We will never post to these accounts on your behalf.</p>
+          <p className="info"> {t('signInControl.neverYourBehalf')} </p>
         </div>
       )}
 
-      {providersLen > 0 && <div className="c-divider">OR</div>}
+      {providersLen > 0 && <div className="c-divider"> {t('signInControl.or')} </div>}
 
       {props.useEmail && (
         <div className="l-signin-email">
-          <p>Enter your email address to sign in</p>
+          <p> {t('signInControl.enterEmail')}</p>
           <Form error={error}>
             <Input
               field="email"
@@ -76,7 +77,7 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               placeholder="yourname@example.com"
               suffix={
                 <Button type="submit" color="positive" disabled={email === ""} onClick={signIn}>
-                  Sign in
+                  {t('common.button.signUp')}
                 </Button>
               }
             />
