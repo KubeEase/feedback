@@ -174,7 +174,7 @@ func TestCreateUser_NewUser(t *testing.T) {
 	Expect(newUser.Providers[0].Name).Equals("reference")
 
 	// Try to recreate another user with same reference
-	status, query = server.
+	status, _ = server.
 		AsUser(mock.JonSnow).
 		OnTenant(mock.DemoTenant).
 		ExecutePostAsJSON(apiv1.CreateUser(),
