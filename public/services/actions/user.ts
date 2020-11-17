@@ -25,3 +25,14 @@ export const deleteCurrentAccount = async (): Promise<Result> => {
 export const regenerateAPIKey = async (): Promise<Result<{ apiKey: string }>> => {
   return await http.post<{ apiKey: string }>("/_api/user/regenerate-apikey");
 };
+
+export interface SignUpRequest {
+  legalAgreement?: boolean;
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+export const signUp = async (request: SignUpRequest): Promise<Result> => {
+  return await http.post("/_api/signup", request);
+};
