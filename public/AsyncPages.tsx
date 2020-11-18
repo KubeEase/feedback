@@ -99,6 +99,13 @@ export const AsyncGeneralSettingsPage = load(() =>
   )
 );
 
+export const AsyncStartPage = load(() =>
+  import(
+    /* webpackChunkName: "Start.page" */
+    "@fider/pages/Start/Start.page"
+  )
+);
+
 export const AsyncSignInPage = load(() =>
   import(
     /* webpackChunkName: "SignIn.page" */

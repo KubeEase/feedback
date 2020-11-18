@@ -21,7 +21,7 @@ interface VotesModalState {
   query: string;
 }
 
-class _VotesModal extends React.Component<VotesModalProps, VotesModalState> {
+class InternalVotesModal extends React.Component<VotesModalProps, VotesModalState> {
   constructor(props: VotesModalProps) {
     super(props);
     this.state = {
@@ -74,7 +74,7 @@ class _VotesModal extends React.Component<VotesModalProps, VotesModalState> {
                 field="query"
                 icon={this.state.query ? FaTimes : FaSearch}
                 onIconClick={this.state.query ? this.clearSearch : undefined}
-                placeholder={t('showPost.votesModal.searchForUsers')}
+                placeholder={t("showPost.votesModal.searchForUsers")}
                 value={this.state.query}
                 onChange={this.handleSearchFilterChanged}
               />
@@ -98,7 +98,7 @@ class _VotesModal extends React.Component<VotesModalProps, VotesModalState> {
 
         <Modal.Footer>
           <Button color="cancel" onClick={this.closeModal}>
-            {t('common.button.close')}
+            {t("common.button.close")}
           </Button>
         </Modal.Footer>
       </Modal.Window>
@@ -106,4 +106,4 @@ class _VotesModal extends React.Component<VotesModalProps, VotesModalState> {
   }
 }
 
-export const VotesModal = withTranslation()(_VotesModal);
+export const VotesModal = withTranslation()(InternalVotesModal);

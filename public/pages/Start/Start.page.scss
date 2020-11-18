@@ -1,7 +1,6 @@
 @import "~@fider/assets/styles/variables.scss";
 
 #p-signup {
-  text-align: center;
   margin-top: 20px;
 
   @include media(">=md") {
@@ -13,10 +12,6 @@
     max-height: 100px;
     margin: 0 auto;
     display: block;
-  }
-  p {
-    margin-top: 60px;
-    max-width: 500px !important;
   }
 
   .c-button.m-positive {

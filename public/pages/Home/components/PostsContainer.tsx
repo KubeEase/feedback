@@ -25,7 +25,7 @@ interface PostsContainerState {
   limit?: number;
 }
 
-class _PostsContainer extends React.Component<PostsContainerProps, PostsContainerState> {
+class InternalPostsContainer extends React.Component<PostsContainerProps, PostsContainerState> {
   constructor(props: PostsContainerProps) {
     super(props);
 
@@ -131,11 +131,7 @@ class _PostsContainer extends React.Component<PostsContainerProps, PostsContaine
             />
           </div>
         </div>
-        <ListPosts
-          posts={this.state.posts}
-          tags={this.props.tags}
-          emptyText={t("home.postsContainer.emptyText")}
-        />
+        <ListPosts posts={this.state.posts} tags={this.props.tags} emptyText={t("home.postsContainer.emptyText")} />
         {this.state.loading && <Loader />}
         {showMoreLink && (
           <a href={showMoreLink} className="c-post-list-show-more" onTouchEnd={this.showMore} onClick={this.showMore}>
@@ -147,4 +143,4 @@ class _PostsContainer extends React.Component<PostsContainerProps, PostsContaine
   }
 }
 
-export const PostsContainer = withTranslation()(_PostsContainer);
+export const PostsContainer = withTranslation()(InternalPostsContainer);

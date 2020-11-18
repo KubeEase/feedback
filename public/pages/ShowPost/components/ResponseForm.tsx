@@ -20,7 +20,7 @@ interface ResponseFormState {
   error?: Failure;
 }
 
-class _ResponseForm extends React.Component<ResponseFormProps, ResponseFormState> {
+class InternalForm extends React.Component<ResponseFormProps, ResponseFormState> {
   constructor(props: ResponseFormProps) {
     super(props);
 
@@ -69,7 +69,7 @@ class _ResponseForm extends React.Component<ResponseFormProps, ResponseFormState
     const { t } = this.props;
     const button = (
       <Button className="respond" fluid={true} onClick={this.showModal}>
-        <FaBullhorn /> {t('showPost.responseForm.respond')}
+        <FaBullhorn /> {t("showPost.responseForm.respond")}
       </Button>
     );
 
@@ -95,26 +95,26 @@ class _ResponseForm extends React.Component<ResponseFormProps, ResponseFormState
                   <PostSearch exclude={[this.props.post.number]} onChanged={this.setOriginalNumber} />
                 </Field>
                 <DisplayError fields={["originalNumber"]} error={this.state.error} />
-                <span className="info">{t('showPost.responseForm.mergedIntoOriginal')}</span>
+                <span className="info">{t("showPost.responseForm.mergedIntoOriginal")}</span>
               </>
             ) : (
-                <TextArea
-                  field="text"
-                  onChange={this.setText}
-                  value={this.state.text}
-                  minRows={5}
-                  placeholder={t('showPost.responseForm.whatsGoingOn')}
-                />
-              )}
+              <TextArea
+                field="text"
+                onChange={this.setText}
+                value={this.state.text}
+                minRows={5}
+                placeholder={t("showPost.responseForm.whatsGoingOn")}
+              />
+            )}
           </Form>
         </Modal.Content>
 
         <Modal.Footer>
           <Button color="positive" onClick={this.submit}>
-            {t('common.button.submit')}
+            {t("common.button.submit")}
           </Button>
           <Button color="cancel" onClick={this.closeModal}>
-            {t('common.button.cancel')}
+            {t("common.button.cancel")}
           </Button>
         </Modal.Footer>
       </Modal.Window>
@@ -129,4 +129,4 @@ class _ResponseForm extends React.Component<ResponseFormProps, ResponseFormState
   }
 }
 
-export const ResponseForm = withTranslation()(_ResponseForm);
+export const ResponseForm = withTranslation()(InternalForm);

@@ -36,23 +36,22 @@ export const VotesPanel = (props: VotesPanelProps) => {
   return (
     <>
       <VotesModal post={props.post} isOpen={isVotesModalOpen} onClose={closeModal} />
-      <span className="subtitle">{t('showPost.votesPanel.subtitle')}</span>
+      <span className="subtitle">{t("showPost.votesPanel.subtitle")}</span>
       <div className="l-votes-list">
         {props.votes.map(x => (
           <Avatar key={x.user.id} user={x.user} />
         ))}
         {extraVotesCount > 0 && (
           <span onClick={openModal} className={moreVotesClassName}>
-            +{extraVotesCount} {t('showPost.votesPanel.more')}
+            +{extraVotesCount} {t("showPost.votesPanel.more")}
           </span>
         )}
         {props.votes.length > 0 && extraVotesCount === 0 && canShowAll() && (
           <span onClick={openModal} className={moreVotesClassName}>
-            {t('showPost.votesPanel.seeDetails')}
+            {t("showPost.votesPanel.seeDetails")}
           </span>
         )}
-        {props.votes.length === 0 && <span className="info">{t('showPost.votesPanel.noneYet')}
-        </span>}
+        {props.votes.length === 0 && <span className="info">{t("showPost.votesPanel.noneYet")}</span>}
       </div>
     </>
   );

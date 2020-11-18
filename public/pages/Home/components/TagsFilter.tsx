@@ -17,7 +17,7 @@ interface TagsFilterState {
   selected: string[];
 }
 
-class _TagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
+class InternalTagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
   constructor(props: TagsFilterProps) {
     super(props);
     this.state = {
@@ -43,8 +43,8 @@ class _TagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
       this.state.selected.length === 0
         ? t("home.tagsFilter.anyTag")
         : this.state.selected.length === 1
-          ? t("home.tagsFilter.oneTag")
-          : t("home.tagsFilter.nTags", { n: this.state.selected.length });
+        ? t("home.tagsFilter.oneTag")
+        : t("home.tagsFilter.nTags", { n: this.state.selected.length });
     return <>{text}</>;
   };
 
@@ -53,14 +53,14 @@ class _TagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
       return null;
     }
 
-    const items = this.props.tags.map(t => {
+    const items = this.props.tags.map(tag => {
       return {
-        value: t.slug,
-        label: t.name,
+        value: tag.slug,
+        label: tag.name,
         render: (
-          <div className={this.state.selected.indexOf(t.slug) >= 0 ? "selected-tag" : ""}>
+          <div className={this.state.selected.indexOf(tag.slug) >= 0 ? "selected-tag" : ""}>
             <FaCheck />
-            <ShowTag tag={t} size="mini" circular={true} />
+            <ShowTag tag={tag} size="mini" circular={true} />
             {t.name}
           </div>
         )
@@ -68,7 +68,6 @@ class _TagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
     });
     const { t } = this.props;
     return (
-
       <div>
         <span className="subtitle">{t("home.tagsFilter.subtitle")}</span>
         <DropDown
@@ -85,4 +84,4 @@ class _TagsFilter extends React.Component<TagsFilterProps, TagsFilterState> {
   }
 }
 
-export const TagsFilter = withTranslation()(_TagsFilter);
+export const TagsFilter = withTranslation()(InternalTagsFilter);

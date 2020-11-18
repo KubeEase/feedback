@@ -18,7 +18,7 @@ interface SimilarPostsState {
   loading: boolean;
 }
 
-class _SimilarPosts extends React.Component<SimilarPostsProps, SimilarPostsState> {
+class InternalSimilarPosts extends React.Component<SimilarPostsProps, SimilarPostsState> {
   constructor(props: SimilarPostsProps) {
     super(props);
     this.state = {
@@ -71,15 +71,15 @@ class _SimilarPosts extends React.Component<SimilarPostsProps, SimilarPostsState
         {this.state.loading ? (
           <Loader />
         ) : (
-            <ListPosts
-              posts={this.state.posts}
-              tags={this.props.tags}
-              emptyText={t("home.similarPosts.emptyText", { title: this.props.title })}
-            />
-          )}
+          <ListPosts
+            posts={this.state.posts}
+            tags={this.props.tags}
+            emptyText={t("home.similarPosts.emptyText", { title: this.props.title })}
+          />
+        )}
       </>
     );
   }
 }
 
-export const SimilarPosts = withTranslation()(_SimilarPosts);
+export const SimilarPosts = withTranslation()(InternalSimilarPosts);

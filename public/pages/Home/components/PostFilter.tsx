@@ -21,10 +21,10 @@ export const PostFilter = (props: PostFilterProps) => {
   };
   const renderText = (item: DropDownItem | undefined) => {
     if (!item) {
-      return <div></div>;
+      return <div />;
     }
     return <div>{t(item.label)}</div>;
-  }
+  };
 
   const options: DropDownItem[] = [
     { value: "trending", label: t("home.postFilter.options.trending") },

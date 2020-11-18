@@ -73,7 +73,7 @@ class MyNotificationsPage extends React.Component<MyNotificationsPageProps, MyNo
         </h4>
         <List>
           {this.state.unread.length > 0 && this.items(this.state.unread)}
-          {this.state.unread.length === 0 && <span className="info">{t('myNotifications.noUnread')}</span>}
+          {this.state.unread.length === 0 && <span className="info">{t("myNotifications.noUnread")}</span>}
         </List>
         {this.state.recent.length > 0 && (
           <>
