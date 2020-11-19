@@ -25,6 +25,7 @@ type dbUser struct {
 	Status        sql.NullInt64  `db:"status"`
 	AvatarType    sql.NullInt64  `db:"avatar_type"`
 	AvatarBlobKey sql.NullString `db:"avatar_bkey"`
+	Password      sql.NullString `db:"password"`
 	Providers     []*dbUserProvider
 }
 
@@ -50,6 +51,7 @@ func (u *dbUser) toModel(ctx context.Context) *models.User {
 		AvatarType:    avatarType,
 		AvatarBlobKey: u.AvatarBlobKey.String,
 		AvatarURL:     buildAvatarURL(ctx, avatarType, int(u.ID.Int64), u.Name.String, u.AvatarBlobKey.String),
+		Password:      u.Password.String,
 	}
 
 	for i, p := range u.Providers {
@@ -365,7 +367,7 @@ func getAllUsers(ctx context.Context, q *query.GetAllUsers) error {
 	return using(ctx, func(trx *dbx.Trx, tenant *models.Tenant, user *models.User) error {
 		var users []*dbUser
 		err := trx.Select(&users, `
-			SELECT id, name, email, tenant_id, role, status, avatar_type, avatar_bkey
+			SELECT id, name, email, tenant_id, role, status, avatar_type, avatar_bkey, password
 			FROM users 
 			WHERE tenant_id = $1 
 			AND status != $2
@@ -384,7 +386,7 @@ func getAllUsers(ctx context.Context, q *query.GetAllUsers) error {
 
 func queryUser(ctx context.Context, trx *dbx.Trx, filter string, args ...interface{}) (*models.User, error) {
 	user := dbUser{}
-	sql := fmt.Sprintf("SELECT id, name, email, tenant_id, role, status, avatar_type, avatar_bkey FROM users WHERE status != %d AND ", enum.UserDeleted)
+	sql := fmt.Sprintf("SELECT id, name, email, tenant_id, role, status, avatar_type, avatar_bkey, password FROM users WHERE status != %d AND ", enum.UserDeleted)
 	err := trx.Get(&user, sql+filter, args...)
 	if err != nil {
 		return nil, err

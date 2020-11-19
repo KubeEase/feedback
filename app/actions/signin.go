@@ -33,7 +33,7 @@ func (input *SignInByEmail) Validate(ctx context.Context, user *models.User) *va
 
 	if input.Model.Email == "" {
 		result.AddFieldFailure("email", "Email is required.")
-		return result
+		// return result
 	}
 
 	if len(input.Model.Email) > 200 {
@@ -42,6 +42,11 @@ func (input *SignInByEmail) Validate(ctx context.Context, user *models.User) *va
 
 	messages := validate.Email(input.Model.Email)
 	result.AddFieldFailure("email", messages...)
+
+	if input.Model.Password == "" {
+		result.AddFieldFailure("password", "Password is required.")
+		// return result
+	}
 
 	return result
 }

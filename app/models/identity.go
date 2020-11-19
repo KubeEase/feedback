@@ -149,12 +149,18 @@ type UpdateTenantPrivacy struct {
 //SignInByEmail is the input model when user request to sign in by email
 type SignInByEmail struct {
 	Email           string `json:"email" format:"lower"`
+	Password        string `json:"password"`
 	VerificationKey string
 }
 
 //GetEmail returns the email being verified
 func (e *SignInByEmail) GetEmail() string {
 	return e.Email
+}
+
+//GetPassword returns the password of user
+func (e *SignInByEmail) GetPassword() string {
+	return e.Password
 }
 
 //GetName returns empty for this kind of process

@@ -5,27 +5,25 @@ import { SocialSignInButton, Form, Button, Input, Message } from "@fider/compone
 import { device, actions, Failure, isCookieEnabled } from "@fider/services";
 import { useFider } from "@fider/hooks";
 import { useTranslation } from "react-i18next";
+import { Password } from "./form/Input";
 
 interface SignInControlProps {
   useEmail: boolean;
   redirectTo?: string;
-  onEmailSent?: (email: string) => void;
 }
 
 export const SignInControl: React.FunctionComponent<SignInControlProps> = props => {
   const fider = useFider();
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<Failure | undefined>(undefined);
 
   const signIn = async () => {
-    const result = await actions.signIn(email);
+    setError(undefined);
+    const result = await actions.signIn({ email, password });
     if (result.ok) {
-      setEmail("");
-      setError(undefined);
-      if (props.onEmailSent) {
-        props.onEmailSent(email);
-      }
+      location.href = "/";
     } else if (result.error) {
       setError(result.error);
     }
@@ -51,23 +49,24 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               <React.Fragment key={o.provider}>
                 {i % 4 === 0 && <div className="col-lf" />}
                 <div
-                  className={`col-sm l-provider-${o.provider} l-social-col ${providersLen === 1 ? "l-social-col-100" : ""
-                    }`}
+                  className={`col-sm l-provider-${o.provider} l-social-col ${
+                    providersLen === 1 ? "l-social-col-100" : ""
+                  }`}
                 >
                   <SocialSignInButton option={o} redirectTo={props.redirectTo} />
                 </div>
               </React.Fragment>
             ))}
           </div>
-          <p className="info"> {t('signInControl.neverYourBehalf')} </p>
+          <p className="info"> {t("signInControl.neverYourBehalf")} </p>
         </div>
       )}
 
-      {providersLen > 0 && <div className="c-divider"> {t('signInControl.or')} </div>}
+      {providersLen > 0 && <div className="c-divider"> {t("signInControl.or")} </div>}
 
       {props.useEmail && (
         <div className="l-signin-email">
-          <p> {t('signInControl.enterEmail')}</p>
+          <p> {t("signInControl.enterEmail")}</p>
           <Form error={error}>
             <Input
               field="email"
@@ -75,12 +74,17 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               autoFocus={!device.isTouch()}
               onChange={setEmail}
               placeholder="yourname@example.com"
-              suffix={
-                <Button type="submit" color="positive" disabled={email === ""} onClick={signIn}>
-                  {t('common.button.signUp')}
-                </Button>
-              }
             />
+            <Password
+              field="password"
+              value={password}
+              autoFocus={!device.isTouch()}
+              onChange={setPassword}
+              placeholder="Password"
+            />
+            <Button type="submit" color="positive" disabled={email === "" || password === ""} onClick={signIn}>
+              {t("menu.signIn")}
+            </Button>
           </Form>
         </div>
       )}

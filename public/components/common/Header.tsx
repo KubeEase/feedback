@@ -71,10 +71,19 @@ export const Header = () => {
             <span>{fider.session.tenant.name}</span>
           </a>
           {showRightMenu && (
-            <div onClick={showModal} className="c-menu-item-signin">
+            <div className="c-menu-item-signin">
               {fider.session.isAuthenticated && <Avatar user={fider.session.user} />}
               {unreadNotifications > 0 && <div className="c-unread-dot" />}
-              {!fider.session.isAuthenticated && <span>{t("menu.signIn")}</span>}
+              {!fider.session.isAuthenticated && (
+                <div>
+                  <span>
+                    <a href="/signup">{t("menu.signUp")}</a>
+                  </span>{" "}
+                  <span onClick={showModal}>
+                    <a href="#">{t("menu.signIn")}</a>
+                  </span>
+                </div>
+              )}
               {fider.session.isAuthenticated && <FaCaretDown />}
               {items}
             </div>
