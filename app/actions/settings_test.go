@@ -47,10 +47,10 @@ func TestInvalidSettings(t *testing.T) {
 	RegisterT(t)
 
 	for _, settings := range []map[string]string{
-		map[string]string{
+		{
 			"bad_name": "3",
 		},
-		map[string]string{
+		{
 			enum.NotificationEventNewComment.UserSettingsKeyName: "4",
 		},
 	} {
@@ -68,12 +68,12 @@ func TestValidSettings(t *testing.T) {
 
 	for _, settings := range []map[string]string{
 		nil,
-		map[string]string{
+		{
 			enum.NotificationEventNewPost.UserSettingsKeyName:      enum.NotificationEventNewPost.DefaultSettingValue,
 			enum.NotificationEventNewComment.UserSettingsKeyName:   enum.NotificationEventNewComment.DefaultSettingValue,
 			enum.NotificationEventChangeStatus.UserSettingsKeyName: enum.NotificationEventChangeStatus.DefaultSettingValue,
 		},
-		map[string]string{
+		{
 			enum.NotificationEventNewComment.UserSettingsKeyName: enum.NotificationEventNewComment.DefaultSettingValue,
 		},
 	} {

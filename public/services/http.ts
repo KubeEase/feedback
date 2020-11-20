@@ -1,8 +1,7 @@
 import { analytics, notify, truncate } from "@fider/services";
-import i18n from 'i18next';
+import i18n from "i18next";
 
-const getLanguage = () => i18n.language || window.localStorage.i18nextLng
-
+const getLanguage = () => i18n.language || window.localStorage.i18nextLng;
 
 export interface ErrorItem {
   field?: string;
