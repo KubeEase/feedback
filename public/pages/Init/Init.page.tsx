@@ -1,4 +1,4 @@
-import "./init.page.scss";
+import "./Init.page.scss";
 
 import React from "react";
 import { SignInControl, Modal, Button, DisplayError, Form, Input, Message, LegalAgreement } from "@fider/components";
