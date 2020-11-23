@@ -149,12 +149,18 @@ type UpdateTenantPrivacy struct {
 //SignInByEmail is the input model when user request to sign in by email
 type SignInByEmail struct {
 	Email           string `json:"email" format:"lower"`
+	Password        string `json:"password"`
 	VerificationKey string
 }
 
 //GetEmail returns the email being verified
 func (e *SignInByEmail) GetEmail() string {
 	return e.Email
+}
+
+//GetPassword returns the password of user
+func (e *SignInByEmail) GetPassword() string {
+	return e.Password
 }
 
 //GetName returns empty for this kind of process
@@ -170,6 +176,38 @@ func (e *SignInByEmail) GetUser() *User {
 //GetKind returns EmailVerificationKindSignIn
 func (e *SignInByEmail) GetKind() enum.EmailVerificationKind {
 	return enum.EmailVerificationKindSignIn
+}
+
+//UserSignUpByEmail is the input model when user request to sign in by email
+type UserSignUpByEmail struct {
+	Email           string `json:"email" format:"lower"`
+	Language        string `json:"language" format:"lower"`
+	VerificationKey string
+}
+
+//GetEmail returns the email being verified
+func (e *UserSignUpByEmail) GetEmail() string {
+	return e.Email
+}
+
+//GetName returns empty for this kind of process
+func (e *UserSignUpByEmail) GetName() string {
+	return ""
+}
+
+//GetUser returns the current user performing this action
+func (e *UserSignUpByEmail) GetUser() *User {
+	return nil
+}
+
+//GetKind returns EmailVerificationKindSignIn
+func (e *UserSignUpByEmail) GetKind() enum.EmailVerificationKind {
+	return enum.EmailVerificationKindUserRegister
+}
+
+//GetLanguage returns the current language code
+func (e *UserSignUpByEmail) GetLanguage() string {
+	return e.Language
 }
 
 //ChangeUserEmail is the input model used to change current user's email

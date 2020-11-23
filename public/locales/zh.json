@@ -8,7 +8,8 @@
     "administration": "管理员",
     "siteSettings": "站点设置",
     "signOut": "注销",
-    "signIn": "登录"
+    "signIn": "登录",
+    "signUp": "注册"
   },
   "home": {
     "lonelyHint": "这里很空，开始提建议吧！",
@@ -142,6 +143,9 @@
     "reactivateSite": "要重新激活此站点，请使用管理员帐户登录并更新所需的设置。",
     "needInvite": "<strong>{{tenantName}}</strong> 是一个私人站点，需要邀请才能加入。",
     "haveAnAccount": "如果您有帐户或邀请，则可以使用以下选项登录。"
+  },
+  "signInControl":{
+    "enterEmail": "输入您的邮箱和密码"
   },
   "signUp": {
     "thankYou": "感谢注册!",

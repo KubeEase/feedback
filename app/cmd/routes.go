@@ -57,6 +57,7 @@ func routes(r *web.Engine) *web.Engine {
 	r.Get("/_api/tenants/:subdomain/availability", handlers.CheckAvailability())
 	r.Get("/start", handlers.Start())
 	r.Get("/signup", handlers.SignUp())
+	r.Get("/init", handlers.Init())
 	r.Get("/oauth/:provider", handlers.SignInByOAuth())
 	r.Get("/oauth/:provider/callback", handlers.OAuthCallback())
 
@@ -94,6 +95,8 @@ func routes(r *web.Engine) *web.Engine {
 	r.Get("/invite/verify", handlers.VerifySignInKey(enum.EmailVerificationKindUserInvitation))
 	r.Post("/_api/signin/complete", handlers.CompleteSignInProfile())
 	r.Post("/_api/signin", handlers.SignInByEmail())
+	r.Post("/_api/register", handlers.RegisterByEmail())
+	r.Get("/register/verify", handlers.VerifyRegisterKey(enum.EmailVerificationKindUserRegister))
 
 	//Block if it's a locked tenant with a non-administrator user
 	r.Use(middlewares.BlockLockedTenants())

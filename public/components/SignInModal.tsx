@@ -15,9 +15,9 @@ export const SignInModal: React.StatelessComponent<SignInModalProps> = props => 
     }
   }, [confirmationAddress]);
 
-  const onEmailSent = (email: string): void => {
-    setConfirmationAddress(email);
-  };
+  // const onEmailSent = (email: string): void => {
+  //   setConfirmationAddress(email);
+  // };
 
   const closeModal = () => {
     setConfirmationAddress("");
@@ -37,7 +37,7 @@ export const SignInModal: React.StatelessComponent<SignInModalProps> = props => 
       </p>
     </>
   ) : (
-    <SignInControl useEmail={true} onEmailSent={onEmailSent} />
+    <SignInControl useEmail={true} />
   );
 
   return (

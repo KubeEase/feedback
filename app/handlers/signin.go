@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/getfider/fider/app/models/cmd"
 	"github.com/getfider/fider/app/models/enum"
@@ -13,9 +12,9 @@ import (
 	"github.com/getfider/fider/app/models/query"
 	"github.com/getfider/fider/app/pkg/bus"
 	"github.com/getfider/fider/app/pkg/errors"
+	"github.com/getfider/fider/app/pkg/passhash"
 	"github.com/getfider/fider/app/pkg/web"
 	webutil "github.com/getfider/fider/app/pkg/web/util"
-	"github.com/getfider/fider/app/tasks"
 )
 
 // SignInPage renders the sign in page
@@ -47,21 +46,25 @@ func NotInvitedPage() web.HandlerFunc {
 func SignInByEmail() web.HandlerFunc {
 	return func(c *web.Context) error {
 		input := new(actions.SignInByEmail)
-		if result := c.BindTo(input); !result.Ok {
+		result := c.BindTo(input)
+		if !result.Ok {
 			return c.HandleValidation(result)
 		}
 
-		err := bus.Dispatch(c, &cmd.SaveVerificationKey{
-			Key:      input.Model.VerificationKey,
-			Duration: 30 * time.Minute,
-			Request:  input.Model,
-		})
-		if err != nil {
-			return c.Failure(err)
+		userByEmail := &query.GetUserByEmail{Email: input.Model.Email}
+		err := bus.Dispatch(c, userByEmail)
+		user := userByEmail.Result
+		if err != nil || !passhash.MatchString(user.Password, input.Model.Password) {
+			result.AddFieldFailure("email", "Incorrect email or password")
+
+		}
+		if !result.Ok {
+			return c.HandleValidation(result)
 		}
 
-		c.Enqueue(tasks.SendSignInEmail(input.Model))
+		webutil.AddAuthUserCookie(c, user)
 
+		// return c.Redirect(c.BaseURL())
 		return c.Ok(web.Map{})
 	}
 }

@@ -1,4 +1,7 @@
 import { analytics, notify, truncate } from "@fider/services";
+import i18n from "i18next";
+
+const getLanguage = () => i18n.language || window.localStorage.i18nextLng;
 
 export interface ErrorItem {
   field?: string;
@@ -42,7 +45,7 @@ async function toResult<T>(response: Response): Promise<Result<T>> {
   };
 }
 async function request<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE", body?: any): Promise<Result<T>> {
-  const headers = [["Accept", "application/json"], ["Content-Type", "application/json"]];
+  const headers = [["Accept", "application/json"], ["Content-Type", "application/json"], ["Language", getLanguage()]];
   try {
     const response = await fetch(url, {
       method,

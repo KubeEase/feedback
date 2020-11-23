@@ -72,6 +72,8 @@ export const AsyncInvitationsPage = load(() =>
   )
 );
 
+export const AsyncInitPage = load(() => import("@fider/pages/Init/Init.page"));
+
 export const AsyncManageAuthenticationPage = load(() =>
   import(
     /* webpackChunkName: "ManageAuthentication.page" */

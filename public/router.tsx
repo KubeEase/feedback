@@ -33,6 +33,7 @@ const pathRegex = [
   route("/signin", Pages.AsyncSignInPage, false),
   route("/signup", Pages.AsyncSignUpPage, false),
   route("/signin/verify", Pages.AsyncCompleteSignInProfilePage),
+  route("/init", Pages.AsyncInitPage, false),
   route("/invite/verify", Pages.AsyncCompleteSignInProfilePage),
   route("/notifications", Pages.AsyncMyNotificationsPage),
   route("/settings", Pages.AsyncMySettingsPage),

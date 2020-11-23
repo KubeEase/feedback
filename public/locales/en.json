@@ -8,7 +8,8 @@
     "administration": "Administration",
     "siteSettings": "Site Settings",
     "signOut": "Sign out",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "signUp": "Sign Up"
   },
   "home": {
     "lonelyHint": "It's lonely out here. Start by sharing a suggestion!",
@@ -142,6 +143,9 @@
     "reactivateSite": "To reactivate this site, sign in with an administrator account and update the required settings.",
     "needInvite": "<strong>{{tenantName}}</strong> is a private space and requires an invitation to join it.",
     "haveAnAccount": "If you have an account or an invitation, you may use following options to sign in."
+  },
+  "signInControl":{
+    "enterEmail": "Enter your email address and password to sign in"
   },
   "signUp": {
     "thankYou": "Thank you for registering!",

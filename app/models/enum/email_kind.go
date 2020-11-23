@@ -12,4 +12,6 @@ const (
 	EmailVerificationKindChangeEmail EmailVerificationKind = 3
 	//EmailVerificationKindUserInvitation is the sign in invitation sent to an user
 	EmailVerificationKindUserInvitation EmailVerificationKind = 4
+	//EmailVerificationKindUserRegister is the register user email process
+	EmailVerificationKindUserRegister EmailVerificationKind = 5
 )

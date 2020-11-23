@@ -72,6 +72,27 @@ func SendSignInEmail(model *models.SignInByEmail) worker.Task {
 	})
 }
 
+// SendUserEmailConfirmation is used to send the confirmation email to user
+func SendUserEmailConfirmation(model *models.UserSignUpByEmail) worker.Task {
+	return describe("Send user confirmation email", func(c *worker.Context) error {
+		to := dto.NewRecipient("", model.Email, dto.Props{
+			"tenantName": c.Tenant().Name,
+			"link":       link(web.BaseURL(c), "/register/verify?k=%s", model.VerificationKey),
+		})
+
+		bus.Publish(c, &cmd.SendMail{
+			From:         c.Tenant().Name,
+			To:           []dto.Recipient{to},
+			TemplateName: model.GetLanguage() + "/confirmation_email",
+			Props: dto.Props{
+				"logo": web.LogoURL(c),
+			},
+		})
+
+		return nil
+	})
+}
+
 //SendChangeEmailConfirmation is used to send the change email confirmation email to requestor
 func SendChangeEmailConfirmation(model *models.ChangeUserEmail) worker.Task {
 	return describe("Send change email confirmation", func(c *worker.Context) error {

@@ -2,14 +2,14 @@ import "./SignIn.page.scss";
 
 import React from "react";
 import { SignInControl, TenantLogo, LegalNotice } from "@fider/components";
-import { notify, Fider } from "@fider/services";
+import { Fider } from "@fider/services";
 import { withTranslation, WithTranslation } from "react-i18next";
 
 class SignInPage extends React.Component<WithTranslation, {}> {
-  private onEmailSent = (email: string) => {
-    const { t } = this.props;
-    notify.success(<span dangerouslySetInnerHTML={{ __html: t("signIn.emailSent", { email }) }} />);
-  };
+  // private onEmailSent = (email: string) => {
+  //   const { t } = this.props;
+  //   notify.success(<span dangerouslySetInnerHTML={{ __html: t("signIn.emailSent", { email }) }} />);
+  // };
 
   public render() {
     const { t } = this.props;
@@ -39,7 +39,7 @@ class SignInPage extends React.Component<WithTranslation, {}> {
           <TenantLogo size={100} />
           {Fider.session.tenant.isPrivate ? messages.private() : messages.locked()}
         </div>
-        <SignInControl onEmailSent={this.onEmailSent} useEmail={true} redirectTo={Fider.settings.baseURL} />
+        <SignInControl useEmail={true} redirectTo={Fider.settings.baseURL} />
         <LegalNotice />
       </div>
     );
