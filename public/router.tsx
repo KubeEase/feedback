@@ -8,7 +8,6 @@ interface PageConfiguration {
 
 const route = (path: string, component: any, showHeader: boolean = true): PageConfiguration => {
   path = path
-    .replace("/", "/")
     .replace(":number", "\\d+")
     .replace(":string", ".+")
     .replace("*", "/?.*");
