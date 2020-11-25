@@ -74,10 +74,10 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: getBranch
 
-      - uses: azure/docker-login@v1
+      - uses: docker/login-action@v1.6.0
         if: steps.getBranch.outputs.branch == 'master'
         with:
-          login-server: docker.pkg.github.com 
+          registry: docker.pkg.github.com 
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
 
