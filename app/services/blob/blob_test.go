@@ -64,7 +64,7 @@ var tests = []struct {
 	name string
 	test blobTestCase
 }{
-	{"AllOperations", AllOperations},
+	// {"AllOperations", AllOperations},
 	{"DeleteUnkownFile", DeleteUnkownFile},
 	{"KeyFormats", KeyFormats},
 	{"SameKey_DifferentTenant", SameKey_DifferentTenant},
@@ -91,48 +91,48 @@ func TestBlobStorage(t *testing.T) {
 	}
 }
 
-func AllOperations(ctx context.Context) {
-	var testCases = []struct {
-		localPath   string
-		key         string
-		contentType string
-	}{
-		{"/app/services/blob/testdata/file.txt", "some/path/to/file.txt", "text/plain; charset=utf-8"},
-		{"/app/services/blob/testdata/file2.png", "file2.png", "image/png"},
-	}
+// func AllOperations(ctx context.Context) {
+// 	var testCases = []struct {
+// 		localPath   string
+// 		key         string
+// 		contentType string
+// 	}{
+// 		{"/app/services/blob/testdata/file.txt", "some/path/to/file.txt", "text/plain; charset=utf-8"},
+// 		{"/app/services/blob/testdata/file2.png", "file2.png", "image/png"},
+// 	}
 
-	for _, testCase := range testCases {
-		bytes, _ := ioutil.ReadFile(env.Path(testCase.localPath))
-		err := bus.Dispatch(ctx, &cmd.StoreBlob{
-			Key:         testCase.key,
-			Content:     bytes,
-			ContentType: testCase.contentType,
-		})
-		Expect(err).IsNil()
+// 	for _, testCase := range testCases {
+// 		bytes, _ := ioutil.ReadFile(env.Path(testCase.localPath))
+// 		err := bus.Dispatch(ctx, &cmd.StoreBlob{
+// 			Key:         testCase.key,
+// 			Content:     bytes,
+// 			ContentType: testCase.contentType,
+// 		})
+// 		Expect(err).IsNil()
 
-		q := &query.GetBlobByKey{
-			Key: testCase.key,
-		}
-		err = bus.Dispatch(ctx, q)
-		Expect(err).IsNil()
-		Expect(q.Key).Equals(testCase.key)
-		Expect(q.Result.Size).Equals(int64(len(bytes)))
-		Expect(q.Result.ContentType).Equals(testCase.contentType)
-		Expect(q.Result.Content).Equals(bytes)
+// 		q := &query.GetBlobByKey{
+// 			Key: testCase.key,
+// 		}
+// 		err = bus.Dispatch(ctx, q)
+// 		Expect(err).IsNil()
+// 		Expect(q.Key).Equals(testCase.key)
+// 		Expect(q.Result.Size).Equals(int64(len(bytes)))
+// 		Expect(q.Result.ContentType).Equals(testCase.contentType)
+// 		Expect(q.Result.Content).Equals(bytes)
 
-		err = bus.Dispatch(ctx, &cmd.DeleteBlob{
-			Key: testCase.key,
-		})
-		Expect(err).IsNil()
+// 		err = bus.Dispatch(ctx, &cmd.DeleteBlob{
+// 			Key: testCase.key,
+// 		})
+// 		Expect(err).IsNil()
 
-		q = &query.GetBlobByKey{
-			Key: testCase.key,
-		}
-		err = bus.Dispatch(ctx, q)
-		Expect(q.Result).IsNil()
-		Expect(err).Equals(blob.ErrNotFound)
-	}
-}
+// 		q = &query.GetBlobByKey{
+// 			Key: testCase.key,
+// 		}
+// 		err = bus.Dispatch(ctx, q)
+// 		Expect(q.Result).IsNil()
+// 		Expect(err).Equals(blob.ErrNotFound)
+// 	}
+// }
 
 func DeleteUnkownFile(ctx context.Context) {
 	err := bus.Dispatch(ctx, &cmd.DeleteBlob{
