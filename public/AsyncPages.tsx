@@ -72,6 +72,10 @@ export const AsyncInvitationsPage = load(() =>
   )
 );
 
+export const AsyncManageIntegrationPage = load(() =>
+  import("@fider/pages/Administration/pages/ManageIntegration.page")
+);
+
 export const AsyncInitPage = load(() => import("@fider/pages/Init/Init.page"));
 
 export const AsyncManageAuthenticationPage = load(() =>

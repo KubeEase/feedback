@@ -124,6 +124,24 @@ func ManageAuthentication() web.HandlerFunc {
 	}
 }
 
+// ManageIntegration is the page used by administrators to change site integration settings
+func ManageIntegration() web.HandlerFunc {
+	return func(c *web.Context) error {
+		listProviders := &query.ListAllOAuthProviders{}
+		if err := bus.Dispatch(c, listProviders); err != nil {
+			return c.Failure(err)
+		}
+
+		return c.Page(web.Props{
+			Title:     "Integration · Site Settings",
+			ChunkName: "ManageIntegration.page",
+			Data: web.Map{
+				"providers": listProviders.Result,
+			},
+		})
+	}
+}
+
 // GetOAuthConfig returns OAuth config based on given provider
 func GetOAuthConfig() web.HandlerFunc {
 	return func(c *web.Context) error {
