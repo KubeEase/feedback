@@ -16,6 +16,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     // lng: 'zh',
+    nonExplicitSupportedLngs: true,
     fallbackLng: "zh",
     debug: true,
     cleanCode: true,
