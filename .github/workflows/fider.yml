@@ -74,12 +74,18 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: getBranch
 
-      - uses: azure/docker-login@v1
+      - uses: docker/login-action@v1.6.0
         if: steps.getBranch.outputs.branch == 'master'
         with:
-          login-server: docker.pkg.github.com 
+          registry: docker.pkg.github.com 
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
+      - uses: docker/login-action@v1.6.0
+        if: steps.getBranch.outputs.branch == 'master'
+        with:
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ALI_USER }}
+          password: ${{ secrets.ALI_PASS }}
 
       - name: push docker image
         if: steps.getBranch.outputs.branch == 'master'
@@ -88,3 +94,5 @@ jobs:
           docker tag docker.pkg.github.com/kubeease/feedback/feedback docker.pkg.github.com/kubeease/feedback/feedback:${SHORT_SHA}
           docker push docker.pkg.github.com/kubeease/feedback/feedback:${SHORT_SHA}
           docker push docker.pkg.github.com/kubeease/feedback/feedback
+          docker tag docker.pkg.github.com/kubeease/feedback/feedback registry.cn-hangzhou.aliyuncs.com/kubeease/feedback:${SHORT_SHA}
+          docker push registry.cn-hangzhou.aliyuncs.com/kubeease/feedback:${SHORT_SHA}
