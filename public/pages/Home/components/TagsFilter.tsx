@@ -61,7 +61,7 @@ class InternalTagsFilter extends React.Component<TagsFilterProps, TagsFilterStat
           <div className={this.state.selected.indexOf(tag.slug) >= 0 ? "selected-tag" : ""}>
             <FaCheck />
             <ShowTag tag={tag} size="mini" circular={true} />
-            {t.name}
+            {tag.name}
           </div>
         )
       };
