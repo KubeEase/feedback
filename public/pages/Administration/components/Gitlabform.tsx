@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Failure } from "@fider/services";
-import { Button, Field, Form, Heading, Input, Toggle } from "@fider/components";
+import { actions, Failure } from "@fider/services";
+import { Button, Field, Form, Heading, Input, Password, Toggle } from "@fider/components";
 import { useFider } from "@fider/hooks";
 
 interface GitlabFormProps {
@@ -20,8 +20,21 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
   const handleCancel = async () => {
     props.onCancel();
   };
+
   const handleSave = async () => {
     setError(undefined);
+    const result = await actions.saveGitlabConfig({
+      url,
+      path,
+      verifySSL,
+      appID: applicationID,
+      appSecret: applicationSecret
+    });
+    if (result.ok) {
+      location.reload();
+    } else {
+      setError(result.error);
+    }
   };
   return (
     <>
@@ -74,7 +87,7 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
           onChange={setApplicationID}
           placeholder="218b03cd02f078f28df02e3f6c4ae93d"
         />
-        <Input
+        <Password
           field="applicationSecret"
           label="GitLab Application Secret"
           maxLength={300}

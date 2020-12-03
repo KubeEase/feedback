@@ -108,3 +108,15 @@ export interface CreateEditOAuthConfigRequest {
 export const saveOAuthConfig = async (request: CreateEditOAuthConfigRequest): Promise<Result> => {
   return await http.post("/_api/admin/oauth", request);
 };
+
+export interface CreateEditGitlabConfigRequest {
+  url: string;
+  path: string;
+  verifySSL: boolean;
+  appID: string;
+  appSecret: string;
+}
+
+export const saveGitlabConfig = async (request: CreateEditGitlabConfigRequest): Promise<Result> => {
+  return await http.post("/_api/admin/gitlab", request);
+};
