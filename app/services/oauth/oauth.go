@@ -49,6 +49,7 @@ func (s Service) Init() {
 	bus.AddHandler(getOAuthRawProfile)
 	bus.AddHandler(listActiveOAuthProviders)
 	bus.AddHandler(listAllOAuthProviders)
+	bus.AddHandler(listAllIntegrations)
 }
 
 func getProviderStatus(key string) int {
