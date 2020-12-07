@@ -29,6 +29,7 @@ import { ModerationPanel } from "./components/ModerationPanel";
 import { DiscussionPanel } from "./components/DiscussionPanel";
 import { VotesPanel } from "./components/VotesPanel";
 import { WithTranslation, withTranslation } from "react-i18next";
+import LinkForm from "./components/LinkForm";
 
 interface ShowPostPageProps extends WithTranslation {
   post: Post;
@@ -175,6 +176,11 @@ class ShowPostPage extends React.Component<ShowPostPageProps, ShowPostPageState>
                   <ListItem>
                     <ResponseForm post={this.props.post} />
                   </ListItem>
+                  {Fider.session.user.isAdministrator && (
+                    <ListItem>
+                      <LinkForm post={this.props.post} />
+                    </ListItem>
+                  )}
                 </List>
               )
             ]}
