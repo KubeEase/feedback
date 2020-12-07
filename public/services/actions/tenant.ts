@@ -110,6 +110,7 @@ export const saveOAuthConfig = async (request: CreateEditOAuthConfigRequest): Pr
 };
 
 export interface CreateEditGitlabConfigRequest {
+  id: number;
   url: string;
   path: string;
   verifySSL: boolean;

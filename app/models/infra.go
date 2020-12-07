@@ -64,12 +64,12 @@ type OAuthConfig struct {
 
 // CreateEditGitlabConfig is used to create/edit an gitlab Configuration
 type CreateEditGitlabConfig struct {
-	ID        int
-	URL       string
-	Path      string
-	VerifySSL bool
-	AppID     string
-	AppSecret string
+	ID        int    `json:"id"`
+	URL       string `json:"url"`
+	Path      string `json:"path"`
+	VerifySSL bool   `json:"ssl"`
+	AppID     string `json:"appID"`
+	AppSecret string `json:"appSecret"`
 }
 
 // MarshalJSON returns the JSON encoding of OAuthConfig

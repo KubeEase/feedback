@@ -6,13 +6,14 @@ import { Button, Heading, List, ListItem, Segment } from "@fider/components";
 
 import "./ManageIntegration.page.scss";
 import { GitlabForm } from "../components/Gitlabform";
+import { GitlabConfig } from "@fider/models";
 
 interface ManageIntegrationPageProps {
-  name: string;
+  integrations: GitlabConfig[];
 }
 interface ManageIntegrationPageState {
   editing: boolean;
-  service: string;
+  config: GitlabConfig | null;
 }
 
 export default class ManageIntegrationPage extends AdminBasePage<
@@ -26,11 +27,11 @@ export default class ManageIntegrationPage extends AdminBasePage<
   public subtitle = "Manage your site integration";
   constructor(props: ManageIntegrationPageProps) {
     super(props);
-    this.state = { editing: false, service: "" };
+    this.state = { editing: false, config: null };
   }
 
-  private configure = async (service: string) => {
-    this.setState({ editing: true, service });
+  private configure = async (config: GitlabConfig | null) => {
+    this.setState({ editing: true, config });
   };
 
   private cancel = async () => {
@@ -39,7 +40,7 @@ export default class ManageIntegrationPage extends AdminBasePage<
 
   public content() {
     if (this.state.editing) {
-      return <GitlabForm onCancel={this.cancel} />;
+      return <GitlabForm onCancel={this.cancel} config={this.state.config} />;
     }
     return (
       <>
@@ -50,19 +51,27 @@ export default class ManageIntegrationPage extends AdminBasePage<
         />
         <Segment>
           <List divided={true}>
-            <ListItem key="gitlab">
-              <div className="l-service">
-                <AiFillGitlab className="logo" />
-
-                <strong>Gitlab</strong>
-                <Button onClick={this.configure.bind(this, "gitlab")} size="mini" className="right">
-                  <GrConfigure />
-                  Configure
-                </Button>
-              </div>
-            </ListItem>
+            {this.props.integrations.map(o => (
+              <ListItem key={o.id}>
+                <div className="l-service">
+                  <AiFillGitlab className="logo" />
+                  <strong>Gitlab</strong>
+                  <Button onClick={this.configure.bind(this, o)} size="mini" className="right">
+                    <GrConfigure />
+                    Configure
+                  </Button>
+                </div>
+                <span className="info">
+                  {o.url}
+                  {o.path}
+                </span>
+              </ListItem>
+            ))}
           </List>
         </Segment>
+        <Button color="positive" onClick={this.configure.bind(this, null)}>
+          Add new
+        </Button>
       </>
     );
   }

@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { actions, Failure } from "@fider/services";
 import { Button, Field, Form, Heading, Input, Password, Toggle } from "@fider/components";
 import { useFider } from "@fider/hooks";
+import { GitlabConfig } from "@fider/models";
 
 interface GitlabFormProps {
-  //   config?: OAuthConfig;
+  config: GitlabConfig | null;
   onCancel: () => void;
 }
 
 export const GitlabForm: React.FC<GitlabFormProps> = props => {
   const fider = useFider();
   const [error, setError] = useState<Failure | undefined>();
-  const [url, setUrl] = useState<string>("");
-  const [path, setPath] = useState<string>("");
-  const [verifySSL, setVerifySSL] = useState(true);
-  const [applicationID, setApplicationID] = useState("");
-  const [applicationSecret, setApplicationSecret] = useState("");
+  const [id] = useState(props.config == null ? 0 : props.config.id);
+  const [url, setUrl] = useState<string>(props.config == null ? "" : props.config.url);
+  const [path, setPath] = useState<string>(props.config == null ? "" : props.config.path);
+  const [verifySSL, setVerifySSL] = useState(props.config == null ? true : props.config.ssl);
+  const [applicationID, setApplicationID] = useState(props.config == null ? "" : props.config.appID);
+  const [applicationSecret, setApplicationSecret] = useState(props.config == null ? "" : props.config.appSecret);
 
   const handleCancel = async () => {
     props.onCancel();
@@ -24,6 +26,7 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
   const handleSave = async () => {
     setError(undefined);
     const result = await actions.saveGitlabConfig({
+      id,
       url,
       path,
       verifySSL,
@@ -40,6 +43,7 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
     <>
       <Heading title="Connect Feedback with your App" size="small" />
       <Form error={error}>
+        <input type="hidden" value={id} name="id" />
         <Input
           field="url"
           label="GitLab URL"
@@ -68,7 +72,6 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
             https://gitlab.com/my-group/my-project, enter `my-group/my-project`.
           </p>
         </Input>
-
         <Field label="Verify SSL">
           <Toggle active={verifySSL} onToggle={setVerifySSL} />
           <span>{verifySSL ? "Enabled" : "Disabled"}</span>
@@ -96,7 +99,6 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
           onChange={setApplicationSecret}
           placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXX"
         />
-
         <div className="c-form-field">
           <Button color="positive" onClick={handleSave}>
             Save

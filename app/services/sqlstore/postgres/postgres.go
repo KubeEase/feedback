@@ -117,6 +117,8 @@ func (s Service) Init() {
 	bus.AddHandler(getCustomOAuthConfigByProvider)
 	bus.AddHandler(saveCustomOAuthConfig)
 	bus.AddHandler(saveGitlabConfig)
+	bus.AddHandler(listAllIntegrations)
+
 }
 
 type SqlHandler func(trx *dbx.Trx, tenant *models.Tenant, user *models.User) error
