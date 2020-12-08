@@ -6,3 +6,4 @@ export * from "./billing";
 export * from "./notification";
 export * from "./invite";
 export * from "./infra";
+export * from "./gitlab";

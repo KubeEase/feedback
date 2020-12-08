@@ -2,7 +2,7 @@ import "./ShowPost.page.scss";
 
 import React from "react";
 
-import { Comment, Post, Tag, Vote, ImageUpload } from "@fider/models";
+import { Comment, Post, Tag, Vote, ImageUpload, GitlabProject } from "@fider/models";
 import { actions, Failure, Fider } from "@fider/services";
 
 import {
@@ -38,6 +38,7 @@ interface ShowPostPageProps extends WithTranslation {
   tags: Tag[];
   votes: Vote[];
   attachments: string[];
+  projects: GitlabProject[];
 }
 
 interface ShowPostPageState {
@@ -178,7 +179,7 @@ class ShowPostPage extends React.Component<ShowPostPageProps, ShowPostPageState>
                   </ListItem>
                   {Fider.session.user.isAdministrator && (
                     <ListItem>
-                      <LinkForm post={this.props.post} />
+                      <LinkForm post={this.props.post} projects={this.props.projects} />
                     </ListItem>
                   )}
                 </List>

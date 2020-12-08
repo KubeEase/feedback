@@ -7,6 +7,7 @@ import { Button, Heading, List, ListItem, Segment } from "@fider/components";
 import "./ManageIntegration.page.scss";
 import { GitlabForm } from "../components/Gitlabform";
 import { GitlabConfig } from "@fider/models";
+import { Fider } from "@fider/services";
 
 interface ManageIntegrationPageProps {
   integrations: GitlabConfig[];
@@ -56,10 +57,12 @@ export default class ManageIntegrationPage extends AdminBasePage<
                 <div className="l-service">
                   <AiFillGitlab className="logo" />
                   <strong>Gitlab</strong>
-                  <Button onClick={this.configure.bind(this, o)} size="mini" className="right">
-                    <GrConfigure />
-                    Configure
-                  </Button>
+                  {Fider.session.user.isAdministrator && (
+                    <Button onClick={this.configure.bind(this, o)} size="mini" className="right">
+                      <GrConfigure />
+                      Configure
+                    </Button>
+                  )}
                 </div>
                 <span className="info">
                   {o.url}
@@ -69,9 +72,11 @@ export default class ManageIntegrationPage extends AdminBasePage<
             ))}
           </List>
         </Segment>
-        <Button color="positive" onClick={this.configure.bind(this, null)}>
-          Add new
-        </Button>
+        {Fider.session.user.isAdministrator && (
+          <Button color="positive" onClick={this.configure.bind(this, null)}>
+            Add new
+          </Button>
+        )}
       </>
     );
   }

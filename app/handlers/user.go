@@ -7,6 +7,7 @@ import (
 	"github.com/getfider/fider/app/models/enum"
 	"github.com/getfider/fider/app/pkg/bus"
 	"github.com/getfider/fider/app/pkg/env"
+	"github.com/getfider/fider/app/pkg/passhash"
 	"github.com/getfider/fider/app/pkg/web"
 	webutil "github.com/getfider/fider/app/pkg/web/util"
 )
@@ -61,7 +62,11 @@ func CreateUser() web.HandlerFunc {
 			Role:   enum.RoleCollaborator,
 		}
 		user.Email = input.Model.Email
-		user.Password = input.Model.Password
+		pwd, err := passhash.HashString(input.Model.Password)
+		if err != nil {
+			return c.Failure(err)
+		}
+		user.Password = pwd
 		user.Name = input.Model.Name
 		if err := bus.Dispatch(c, &cmd.RegisterUser{User: user}); err != nil {
 			return c.Failure(err)

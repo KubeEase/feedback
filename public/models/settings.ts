@@ -67,3 +67,8 @@ export interface GitlabConfig {
   appID: string;
   appSecret: string;
 }
+
+export interface GitlabProject {
+  id: number;
+  path: string;
+}

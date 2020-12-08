@@ -4,11 +4,17 @@ import "./Tabs.scss";
 
 interface Props {
   children: ReactElement[];
+  onChange?: (index: number) => void;
 }
 
-const Tabs: React.FC<Props> = ({ children }) => {
+const Tabs: React.FC<Props> = ({ children, onChange }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-
+  const onIndexChange = (index: number) => {
+    setSelectedTab(index);
+    if (onChange !== undefined) {
+      onChange(index);
+    }
+  };
   return (
     <div className="tabs">
       <ul>
@@ -18,7 +24,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
             title={item.props.title}
             selectIndex={selectedTab}
             index={index}
-            setSelectedTab={setSelectedTab}
+            setSelectedTab={onIndexChange}
           />
         ))}
       </ul>
