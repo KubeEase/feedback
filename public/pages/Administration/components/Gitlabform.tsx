@@ -16,8 +16,8 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
   const [url, setUrl] = useState<string>(props.config == null ? "" : props.config.url);
   const [path, setPath] = useState<string>(props.config == null ? "" : props.config.path);
   const [verifySSL, setVerifySSL] = useState(props.config == null ? true : props.config.ssl);
-  const [applicationID, setApplicationID] = useState(props.config == null ? "" : props.config.appID);
-  const [applicationSecret, setApplicationSecret] = useState(props.config == null ? "" : props.config.appSecret);
+  const [username, setUsername] = useState(props.config == null ? "" : props.config.username);
+  const [token, setToken] = useState(props.config == null ? "" : props.config.token);
 
   const handleCancel = async () => {
     props.onCancel();
@@ -30,8 +30,8 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
       url,
       path,
       verifySSL,
-      appID: applicationID,
-      appSecret: applicationSecret
+      username,
+      token
     });
     if (result.ok) {
       location.reload();
@@ -82,21 +82,21 @@ export const GitlabForm: React.FC<GitlabFormProps> = props => {
           </p>
         </Field>
         <Input
-          field="applicationID"
-          label="GitLab Application ID"
+          field="username"
+          label="GitLab Username"
           maxLength={300}
-          value={applicationID}
+          value={username}
           disabled={!fider.session.user.isAdministrator}
-          onChange={setApplicationID}
-          placeholder="218b03cd02f078f28df02e3f6c4ae93d"
+          onChange={setUsername}
+          placeholder="admin"
         />
         <Password
-          field="applicationSecret"
-          label="GitLab Application Secret"
+          field="token"
+          label="GitLab Person Token"
           maxLength={300}
-          value={applicationSecret}
+          value={token}
           disabled={!fider.session.user.isAdministrator}
-          onChange={setApplicationSecret}
+          onChange={setToken}
           placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXX"
         />
         <div className="c-form-field">

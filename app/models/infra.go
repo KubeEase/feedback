@@ -68,8 +68,8 @@ type CreateEditGitlabConfig struct {
 	URL       string `json:"url"`
 	Path      string `json:"path"`
 	VerifySSL bool   `json:"ssl"`
-	AppID     string `json:"appID"`
-	AppSecret string `json:"appSecret"`
+	Username  string `json:"username"`
+	Token     string `json:"token"`
 }
 
 // MarshalJSON returns the JSON encoding of OAuthConfig

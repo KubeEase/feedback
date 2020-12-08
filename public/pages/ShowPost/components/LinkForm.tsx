@@ -55,7 +55,8 @@ export default function LinkForm(props: LinkFormProps) {
       const result = await actions.createIssue({
         projectID,
         title,
-        description
+        description,
+        postID: props.post.id
       });
       if (result.ok) {
         location.reload();

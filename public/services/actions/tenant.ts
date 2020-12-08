@@ -114,8 +114,8 @@ export interface CreateEditGitlabConfigRequest {
   url: string;
   path: string;
   verifySSL: boolean;
-  appID: string;
-  appSecret: string;
+  username: string;
+  token: string;
 }
 
 export const saveGitlabConfig = async (request: CreateEditGitlabConfigRequest): Promise<Result> => {

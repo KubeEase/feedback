@@ -64,8 +64,8 @@ export interface GitlabConfig {
   url: string;
   path: string;
   ssl: boolean;
-  appID: string;
-  appSecret: string;
+  username: string;
+  token: string;
 }
 
 export interface GitlabProject {

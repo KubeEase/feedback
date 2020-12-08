@@ -20,6 +20,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/russross/blackfriday v1.5.2
 	github.com/stripe/stripe-go v64.1.0+incompatible
+	github.com/xanzy/go-gitlab v0.40.1
 	golang.org/x/crypto v0.0.0-20191029031824-8986dd9e96cf
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 )

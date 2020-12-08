@@ -15,8 +15,8 @@ type dbGitlabConfig struct {
 	URL       string `db:"url"`
 	Path      string `db:"path"`
 	VerifySSL bool   `db:"ssl"`
-	AppID     string `db:"application_id"`
-	AppSecret string `db:"application_secret"`
+	Username  string `db:"username"`
+	Token     string `db:"token"`
 }
 
 func (c *dbGitlabConfig) toModel() *models.CreateEditGitlabConfig {
@@ -25,8 +25,8 @@ func (c *dbGitlabConfig) toModel() *models.CreateEditGitlabConfig {
 		URL:       c.URL,
 		Path:      c.Path,
 		VerifySSL: c.VerifySSL,
-		AppID:     c.AppID,
-		AppSecret: c.AppSecret,
+		Username:  c.Username,
+		Token:     c.Token,
 	}
 }
 
@@ -36,7 +36,7 @@ func listAllIntegrations(ctx context.Context, q *query.ListAllIntegrations) erro
 		configs := []*dbGitlabConfig{}
 		if tenant != nil {
 			err = trx.Select(&configs, `
-			SELECT id, url, path, ssl, application_id, application_secret
+			SELECT id, url, path, ssl, username, token
 			FROM integration_gitlab
 			WHERE tenant_id = $1
 			ORDER BY id`, tenant.ID)
@@ -59,23 +59,23 @@ func saveGitlabConfig(ctx context.Context, c *cmd.SaveGitlabConfig) error {
 
 		if c.Config.ID == 0 {
 			query := `INSERT INTO integration_gitlab (
-			url, path, ssl, application_id, application_secret, tenant_id)
+			url, path, ssl, username, token, tenant_id)
 			VALUES ($1, $2, $3, $4, $5, $6)
 			RETURNING id`
 
 			err = trx.Get(&c.Config.ID, query,
-				c.Config.URL, c.Config.Path, c.Config.VerifySSL, c.Config.AppID,
-				c.Config.AppSecret, tenant.ID)
+				c.Config.URL, c.Config.Path, c.Config.VerifySSL, c.Config.Username,
+				c.Config.Token, tenant.ID)
 		} else {
 			query := `
 				UPDATE integration_gitlab
-				SET url = $1, path = $2, ssl = $3, application_id = $4,
-						application_secret = $5
+				SET url = $1, path = $2, ssl = $3, username = $4,
+						token = $5
 			WHERE tenant_id = $6 AND id = $7`
 
 			_, err = trx.Execute(query,
-				c.Config.URL, c.Config.Path, c.Config.VerifySSL, c.Config.AppID,
-				c.Config.AppSecret, tenant.ID, c.Config.ID)
+				c.Config.URL, c.Config.Path, c.Config.VerifySSL, c.Config.Username,
+				c.Config.Token, tenant.ID, c.Config.ID)
 		}
 
 		if err != nil {

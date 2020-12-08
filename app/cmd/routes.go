@@ -216,6 +216,9 @@ func routes(r *web.Engine) *web.Engine {
 		api.Post("/api/v1/tags", apiv1.CreateEditTag())
 		api.Put("/api/v1/tags/:slug", apiv1.CreateEditTag())
 		api.Delete("/api/v1/tags/:slug", apiv1.DeleteTag())
+
+		//Gitlab
+		api.Post("/api/v1/gitlab/issues", apiv1.CreateGitlabIssue())
 	}
 
 	return r
