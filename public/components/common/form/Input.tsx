@@ -7,6 +7,7 @@ import { IconType } from "react-icons";
 interface InputProps {
   field: string;
   label?: string;
+  type?: string;
   className?: string;
   autoComplete?: string;
   autoFocus?: boolean;
@@ -62,7 +63,7 @@ export const Input: React.FunctionComponent<InputProps> = props => {
           <div className="c-form-field-wrapper">
             <input
               id={`input-${props.field}`}
-              type="text"
+              type={props.type === undefined ? "text" : props.type}
               autoComplete={props.autoComplete}
               tabIndex={props.noTabFocus ? -1 : undefined}
               ref={props.inputRef}

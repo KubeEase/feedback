@@ -29,6 +29,10 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
     }
   };
 
+  const onSignup = async () => {
+    location.href = "/signup";
+  };
+
   const providersLen = fider.settings.oauth.length;
 
   if (!isCookieEnabled()) {
@@ -70,6 +74,7 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
           <Form error={error}>
             <Input
               field="email"
+              type="email"
               value={email}
               autoFocus={!device.isTouch()}
               onChange={setEmail}
@@ -86,6 +91,10 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               {t("menu.signIn")}
             </Button>
           </Form>
+          <div className="c-divider">OR</div>
+          <Button color="default" size="normal" onClick={onSignup}>
+            {t("common.button.joinNow")}
+          </Button>
         </div>
       )}
     </div>

@@ -82,6 +82,9 @@ class SignUpPage extends React.Component<WithTranslation, SignUpPageState> {
   private noop = () => {
     // do nothing
   };
+  private onSignin = async () => {
+    location.href = "/signin";
+  };
 
   public render() {
     const { t } = this.props;
@@ -114,7 +117,7 @@ class SignUpPage extends React.Component<WithTranslation, SignUpPageState> {
           {t("common.button.joinNow")}
         </Button>
         <div className="c-divider">OR</div>
-        <Button color="default" size="normal" onClick={this.confirm}>
+        <Button color="default" size="normal" onClick={this.onSignin}>
           {t("signUp.signIn")}
         </Button>
       </div>
