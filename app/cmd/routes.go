@@ -193,12 +193,12 @@ func routes(r *web.Engine) *web.Engine {
 		api.Delete("/api/v1/posts/:number/votes", apiv1.RemoveVote())
 		api.Post("/api/v1/posts/:number/subscription", apiv1.Subscribe())
 		api.Delete("/api/v1/posts/:number/subscription", apiv1.Unsubscribe())
+		api.Put("/api/v1/posts/:number", apiv1.UpdatePost())
 
 		//From this step, only Collaborators and Administrators are allowed
 		api.Use(middlewares.IsAuthorized(enum.RoleCollaborator, enum.RoleAdministrator))
 
 		api.Get("/api/v1/users", apiv1.ListUsers())
-		api.Put("/api/v1/posts/:number", apiv1.UpdatePost())
 		api.Get("/api/v1/posts/:number/votes", apiv1.ListVotes())
 		api.Post("/api/v1/invitations/send", apiv1.SendInvites())
 		api.Post("/api/v1/invitations/sample", apiv1.SendSampleInvite())

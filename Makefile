@@ -20,7 +20,7 @@ lint:
 	golangci-lint run
 test: 
 	docker-compose -f docker-compose-test.yml up -d
-	sleep 15
+	sleep 5
 	godotenv -f .test.env go run main.go migrate
 	godotenv -f .test.env go test ./... -race
 	docker-compose -f docker-compose-test.yml kill && docker-compose -f docker-compose-test.yml rm -f	
