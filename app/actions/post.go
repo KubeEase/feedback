@@ -99,7 +99,7 @@ func (input *UpdatePost) Validate(ctx context.Context, user *models.User) *valid
 	}
 
 	input.Post = postByNumber.Result
-	if user.ID != input.Post.User.ID {
+	if user.ID != input.Post.User.ID && !user.IsAdministrator() && !user.IsCollaborator() {
 		return validate.Error(errors.New("operation not allowed"))
 	}
 	postBySlug := &query.GetPostBySlug{Slug: slug.Make(input.Model.Title)}
