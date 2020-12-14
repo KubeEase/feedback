@@ -148,7 +148,9 @@ class ShowPostPage extends React.Component<ShowPostPageProps, ShowPostPageState>
           <VotesPanel post={this.props.post} votes={this.props.votes} />
 
           {Fider.session.isAuthenticated &&
-            Fider.session.user.id === this.props.post.user.id && [
+            (Fider.session.user.id === this.props.post.user.id ||
+              Fider.session.user.isAdministrator ||
+              Fider.session.user.isCollaborator) && [
               <span key={0} className="subtitle">
                 {t("showPost.actions")}
               </span>,
