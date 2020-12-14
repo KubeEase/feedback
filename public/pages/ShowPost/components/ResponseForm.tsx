@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, Button, DisplayError, Select, Form, TextArea, Field, SelectOption } from "@fider/components";
 import { Post, PostStatus } from "@fider/models";
 
-import { actions, Failure } from "@fider/services";
+import { actions, Failure, Fider } from "@fider/services";
 import { FaBullhorn } from "react-icons/fa";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { PostSearch } from "./PostSearch";
@@ -120,12 +120,15 @@ class InternalForm extends React.Component<ResponseFormProps, ResponseFormState>
       </Modal.Window>
     );
 
-    return (
-      <>
-        {button}
-        {modal}
-      </>
-    );
+    if (Fider.session.isAuthenticated && Fider.session.user.isCollaborator) {
+      return (
+        <>
+          {button}
+          {modal}
+        </>
+      );
+    }
+    return null;
   }
 }
 

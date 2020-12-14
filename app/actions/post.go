@@ -76,7 +76,7 @@ func (input *UpdatePost) Initialize() interface{} {
 
 // IsAuthorized returns true if current user is authorized to perform this action
 func (input *UpdatePost) IsAuthorized(ctx context.Context, user *models.User) bool {
-	return user != nil && user.IsCollaborator()
+	return user != nil
 }
 
 // Validate if current model is valid
@@ -99,7 +99,9 @@ func (input *UpdatePost) Validate(ctx context.Context, user *models.User) *valid
 	}
 
 	input.Post = postByNumber.Result
-
+	if user.ID != input.Post.User.ID {
+		return validate.Error(errors.New("operation not allowed"))
+	}
 	postBySlug := &query.GetPostBySlug{Slug: slug.Make(input.Model.Title)}
 	err := bus.Dispatch(ctx, postBySlug)
 	if err != nil && errors.Cause(err) != app.ErrNotFound {
