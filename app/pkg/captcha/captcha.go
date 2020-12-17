@@ -1,11 +1,15 @@
 package captcha
 
-import "github.com/mojocn/base64Captcha"
+import (
+	"image/color"
+
+	"github.com/mojocn/base64Captcha"
+)
 
 //TODO: Need support redis store
 var store = base64Captcha.DefaultMemStore
 
-var devicer *base64Captcha.DriverMath = base64Captcha.NewDriverMath(48, 180, 5, base64Captcha.OptionShowSineLine, nil, []string{"3Dumb.ttf"})
+var devicer *base64Captcha.DriverMath = base64Captcha.NewDriverMath(36, 200, 0, base64Captcha.OptionShowHollowLine, &color.RGBA{255, 255, 255, 0}, []string{"wqy-microhei.ttc"})
 
 var captcha *base64Captcha.Captcha
 

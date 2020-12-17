@@ -52,6 +52,8 @@ export const checkAvailability = async (subdomain: string): Promise<Result<Check
 export interface SignInRequest {
   email: string;
   password: string;
+  captchaID: string;
+  captchaAnswer: string;
 }
 
 export const signIn = async (request: SignInRequest): Promise<Result> => {

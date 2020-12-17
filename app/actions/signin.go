@@ -7,6 +7,7 @@ import (
 	"github.com/getfider/fider/app/models/enum"
 	"github.com/getfider/fider/app/models/query"
 	"github.com/getfider/fider/app/pkg/bus"
+	"github.com/getfider/fider/app/pkg/captcha"
 	"github.com/getfider/fider/app/pkg/validate"
 )
 
@@ -30,6 +31,10 @@ func (input *SignInByEmail) IsAuthorized(ctx context.Context, user *models.User)
 // Validate if current model is valid
 func (input *SignInByEmail) Validate(ctx context.Context, user *models.User) *validate.Result {
 	result := validate.Success()
+
+	if input.Model.CaptchaID != "" && !captcha.Match(input.Model.CaptchaID, input.Model.CaptchaAnswer) {
+		result.AddFieldFailure("answer", "Captcha code is invaild.")
+	}
 
 	if input.Model.Email == "" {
 		result.AddFieldFailure("email", "Email is required.")

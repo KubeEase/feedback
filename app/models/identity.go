@@ -150,6 +150,8 @@ type UpdateTenantPrivacy struct {
 type SignInByEmail struct {
 	Email           string `json:"email" format:"lower"`
 	Password        string `json:"password"`
+	CaptchaID       string `json:"captchaID"`
+	CaptchaAnswer   string `json:"captchaAnswer"`
 	VerificationKey string
 }
 
