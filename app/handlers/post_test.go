@@ -68,6 +68,9 @@ func TestDetailsHandler(t *testing.T) {
 	bus.AddHandler(func(ctx context.Context, q *query.UserSubscribedTo) error {
 		return nil
 	})
+	bus.AddHandler(func(ctx context.Context, q *query.ListAllIntegrations) error {
+		return nil
+	})
 
 	server := mock.NewServer()
 
