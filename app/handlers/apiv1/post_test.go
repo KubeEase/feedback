@@ -92,6 +92,7 @@ func TestUpdatePostHandler_TenantStaff(t *testing.T) {
 	post := &models.Post{ID: 5, Number: 5, Title: "My First Post", Description: "With a description"}
 	bus.AddHandler(func(ctx context.Context, q *query.GetPostByNumber) error {
 		if q.Number == post.Number {
+			post.User = mock.JonSnow
 			q.Result = post
 			return nil
 		}
@@ -124,10 +125,27 @@ func TestUpdatePostHandler_NonAuthorized(t *testing.T) {
 	RegisterT(t)
 
 	bus.AddHandler(func(ctx context.Context, q *query.GetPostBySlug) error { return app.ErrNotFound })
+	bus.AddHandler(func(ctx context.Context, c *cmd.UploadImages) error { return nil })
+	bus.AddHandler(func(ctx context.Context, c *cmd.SetAttachments) error { return nil })
+
+	post := &models.Post{ID: 5, Number: 5, Title: "My First Post", Description: "With a description"}
+	bus.AddHandler(func(ctx context.Context, q *query.GetPostByNumber) error {
+		if q.Number == post.Number {
+			post.User = mock.JonSnow
+			q.Result = post
+			return nil
+		}
+		return app.ErrNotFound
+	})
+	// var updatePost *cmd.UpdatePost
+	bus.AddHandler(func(ctx context.Context, c *cmd.UpdatePost) error {
+		// updatePost = c
+		return nil
+	})
 
 	code, _ := mock.NewServer().
 		OnTenant(mock.DemoTenant).
-		AsUser(mock.AryaStark).
+		// AsUser(mock.AryaStark).
 		AddParam("number", "5").
 		ExecutePost(apiv1.UpdatePost(), `{ "title": "the new title", "description": "new description" }`)
 
@@ -140,6 +158,7 @@ func TestUpdatePostHandler_InvalidTitle(t *testing.T) {
 	post := &models.Post{ID: 5, Number: 5, Title: "My First Post", Description: "Such an amazing description"}
 	bus.AddHandler(func(ctx context.Context, q *query.GetPostByNumber) error {
 		if q.Number == post.Number {
+			post.User = mock.JonSnow
 			q.Result = post
 			return nil
 		}
@@ -188,10 +207,12 @@ func TestUpdatePostHandler_DuplicateTitle(t *testing.T) {
 	post2 := &models.Post{ID: 2, Number: 2, Title: "My Second Post", Slug: "my-second-post"}
 	bus.AddHandler(func(ctx context.Context, q *query.GetPostByNumber) error {
 		if q.Number == post1.Number {
+			post1.User = mock.JonSnow
 			q.Result = post1
 			return nil
 		}
 		if q.Number == post2.Number {
+			post2.User = mock.JonSnow
 			q.Result = post2
 			return nil
 		}
@@ -564,8 +585,8 @@ func TestListCommentHandler(t *testing.T) {
 
 	bus.AddHandler(func(ctx context.Context, q *query.GetCommentsByPost) error {
 		q.Result = []*models.Comment{
-			&models.Comment{ID: 1, Content: "First Comment"},
-			&models.Comment{ID: 2, Content: "First Comment"},
+			{ID: 1, Content: "First Comment"},
+			{ID: 2, Content: "First Comment"},
 		}
 		return nil
 	})

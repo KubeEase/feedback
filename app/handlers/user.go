@@ -59,7 +59,7 @@ func CreateUser() web.HandlerFunc {
 
 		user := &models.User{
 			Tenant: c.Tenant(),
-			Role:   enum.RoleCollaborator,
+			Role:   enum.RoleVisitor,
 		}
 		user.Email = input.Model.Email
 		pwd, err := passhash.HashString(input.Model.Password)
