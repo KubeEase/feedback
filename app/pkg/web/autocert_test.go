@@ -1,10 +1,12 @@
 package web
 
 import (
+	"context"
 	"crypto/tls"
 	"testing"
 	"time"
 
+	"github.com/getfider/fider/app/models/cmd"
 	"github.com/getfider/fider/app/pkg/bus"
 	"github.com/getfider/fider/app/services/blob/fs"
 
@@ -14,6 +16,9 @@ import (
 func Test_UseAutoCert(t *testing.T) {
 	RegisterT(t)
 	bus.Init(fs.Service{})
+	bus.AddHandler(func(ctx context.Context, q *cmd.DeleteBlob) error {
+		return nil
+	})
 
 	manager, err := NewCertificateManager("", "")
 	Expect(err).IsNil()

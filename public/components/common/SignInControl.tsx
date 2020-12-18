@@ -27,10 +27,11 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
 
   const signIn = async () => {
     setError(undefined);
+    const captchaID = props.captcha === undefined ? "" : props.captcha.id;
     const result = await actions.signIn({
-      email: email,
-      password: password,
-      captchaID: props.captcha == undefined ? "" : props.captcha.id,
+      email,
+      password,
+      captchaID,
       captchaAnswer: answer
     });
     if (result.ok) {
@@ -106,7 +107,7 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
                     <img src={props.captcha.data} />
                   </div>
                   <div className="col-md-6">
-                    <Input field="answer" value={answer} onChange={setAnswer}></Input>
+                    <Input field="answer" value={answer} onChange={setAnswer} />
                   </div>
                 </div>
               </>
