@@ -73,6 +73,22 @@ func PostDetails() web.HandlerFunc {
 			return c.Failure(err)
 		}
 
+		var gitlabProjects []*query.GitlabProject
+		if c.User().IsAdministrator() {
+			listIntegrations := &query.ListAllIntegrations{}
+			if err := bus.Dispatch(c, listIntegrations); err != nil {
+				return c.Failure(err)
+			}
+			gitlabProjects = make([]*query.GitlabProject, len(listIntegrations.Result))
+
+			for i, config := range listIntegrations.Result {
+				gitlabProjects[i] = &query.GitlabProject{
+					ConfigID: config.ID,
+					Path:     config.Path,
+				}
+			}
+		}
+
 		return c.Page(web.Props{
 			Title:       getPost.Result.Title,
 			Description: markdown.PlainText(getPost.Result.Description),
@@ -84,6 +100,7 @@ func PostDetails() web.HandlerFunc {
 				"tags":        getAllTags.Result,
 				"votes":       listVotes.Result,
 				"attachments": getAttachments.Result,
+				"projects":    gitlabProjects,
 			},
 		})
 	}

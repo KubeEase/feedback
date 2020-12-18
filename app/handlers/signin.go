@@ -11,6 +11,7 @@ import (
 	"github.com/getfider/fider/app/models"
 	"github.com/getfider/fider/app/models/query"
 	"github.com/getfider/fider/app/pkg/bus"
+	"github.com/getfider/fider/app/pkg/captcha"
 	"github.com/getfider/fider/app/pkg/errors"
 	"github.com/getfider/fider/app/pkg/passhash"
 	"github.com/getfider/fider/app/pkg/web"
@@ -20,11 +21,18 @@ import (
 // SignInPage renders the sign in page
 func SignInPage() web.HandlerFunc {
 	return func(c *web.Context) error {
-
+		id, b64s, err := captcha.Generate()
+		if err != nil {
+			return c.Failure(err)
+		}
 		if c.Tenant().IsPrivate || c.Tenant().Status == enum.TenantLocked {
 			return c.Page(web.Props{
 				Title:     "Sign in",
 				ChunkName: "SignIn.page",
+				Data: web.Map{
+					"captchaID":   id,
+					"captchaData": b64s,
+				},
 			})
 		}
 

@@ -146,6 +146,7 @@ func routes(r *web.Engine) *web.Engine {
 		ui.Get("/admin/advanced", handlers.AdvancedSettingsPage())
 		ui.Get("/admin/privacy", handlers.Page("Privacy · Site Settings", "", "PrivacySettings.page"))
 		ui.Get("/admin/invitations", handlers.Page("Invitations · Site Settings", "", "Invitations.page"))
+		ui.Get("/admin/integration", handlers.ManageIntegration())
 		ui.Get("/admin/members", handlers.ManageMembers())
 		ui.Get("/admin/tags", handlers.ManageTags())
 		ui.Get("/admin/authentication", handlers.ManageAuthentication())
@@ -161,6 +162,7 @@ func routes(r *web.Engine) *web.Engine {
 		ui.Post("/_api/admin/settings/advanced", handlers.UpdateAdvancedSettings())
 		ui.Post("/_api/admin/settings/privacy", handlers.UpdatePrivacy())
 		ui.Post("/_api/admin/oauth", handlers.SaveOAuthConfig())
+		ui.Post("/_api/admin/gitlab", handlers.SaveGitlabConfig())
 		ui.Post("/_api/admin/roles/:role/users", handlers.ChangeUserRole())
 		ui.Put("/_api/admin/users/:userID/block", handlers.BlockUser())
 		ui.Delete("/_api/admin/users/:userID/block", handlers.UnblockUser())
@@ -214,6 +216,9 @@ func routes(r *web.Engine) *web.Engine {
 		api.Post("/api/v1/tags", apiv1.CreateEditTag())
 		api.Put("/api/v1/tags/:slug", apiv1.CreateEditTag())
 		api.Delete("/api/v1/tags/:slug", apiv1.DeleteTag())
+
+		//Gitlab
+		api.Post("/api/v1/gitlab/issues", apiv1.CreateGitlabIssue())
 	}
 
 	return r

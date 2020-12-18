@@ -60,7 +60,7 @@ func getProviderStatus(key string) int {
 
 var (
 	systemProviders = []*models.OAuthConfig{
-		&models.OAuthConfig{
+		{
 			Provider:          app.FacebookProvider,
 			DisplayName:       "Facebook",
 			ProfileURL:        "https://graph.facebook.com/me?fields=name,email",
@@ -74,7 +74,7 @@ var (
 			JSONUserNamePath:  "name",
 			JSONUserEmailPath: "email",
 		},
-		&models.OAuthConfig{
+		{
 			Provider:          app.GoogleProvider,
 			DisplayName:       "Google",
 			ProfileURL:        "https://www.googleapis.com/oauth2/v2/userinfo",
@@ -88,7 +88,7 @@ var (
 			JSONUserNamePath:  "name",
 			JSONUserEmailPath: "email",
 		},
-		&models.OAuthConfig{
+		{
 			Provider:          app.GitHubProvider,
 			DisplayName:       "GitHub",
 			ProfileURL:        "https://api.github.com/user",

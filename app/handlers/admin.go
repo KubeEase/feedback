@@ -124,6 +124,24 @@ func ManageAuthentication() web.HandlerFunc {
 	}
 }
 
+// ManageIntegration is the page used by administrators to change site integration settings
+func ManageIntegration() web.HandlerFunc {
+	return func(c *web.Context) error {
+		listIntegrations := &query.ListAllIntegrations{}
+		if err := bus.Dispatch(c, listIntegrations); err != nil {
+			return c.Failure(err)
+		}
+
+		return c.Page(web.Props{
+			Title:     "Integration · Site Settings",
+			ChunkName: "ManageIntegration.page",
+			Data: web.Map{
+				"integrations": listIntegrations.Result,
+			},
+		})
+	}
+}
+
 // GetOAuthConfig returns OAuth config based on given provider
 func GetOAuthConfig() web.HandlerFunc {
 	return func(c *web.Context) error {
@@ -158,6 +176,20 @@ func SaveOAuthConfig() web.HandlerFunc {
 			return c.Failure(err)
 		}
 
+		return c.Ok(web.Map{})
+	}
+}
+
+// SaveGitlabConfig used to create/edit gitlab configurations
+func SaveGitlabConfig() web.HandlerFunc {
+	return func(c *web.Context) error {
+		input := new(actions.CreateEditGitlabConfig)
+		if result := c.BindTo(input); !result.Ok {
+			return c.HandleValidation(result)
+		}
+		if err := bus.Dispatch(c, &cmd.SaveGitlabConfig{Config: input.Model}); err != nil {
+			return c.Failure(err)
+		}
 		return c.Ok(web.Map{})
 	}
 }

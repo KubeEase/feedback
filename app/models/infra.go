@@ -62,6 +62,16 @@ type OAuthConfig struct {
 	JSONUserEmailPath string
 }
 
+// CreateEditGitlabConfig is used to create/edit an gitlab Configuration
+type CreateEditGitlabConfig struct {
+	ID        int    `json:"id"`
+	URL       string `json:"url"`
+	Path      string `json:"path"`
+	VerifySSL bool   `json:"ssl"`
+	Username  string `json:"username"`
+	Token     string `json:"token"`
+}
+
 // MarshalJSON returns the JSON encoding of OAuthConfig
 func (o OAuthConfig) MarshalJSON() ([]byte, error) {
 	secret := "..."

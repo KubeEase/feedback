@@ -2,7 +2,7 @@ import "./ShowPost.page.scss";
 
 import React from "react";
 
-import { Comment, Post, Tag, Vote, ImageUpload } from "@fider/models";
+import { Comment, Post, Tag, Vote, ImageUpload, GitlabProject } from "@fider/models";
 import { actions, Failure, Fider } from "@fider/services";
 
 import {
@@ -29,6 +29,7 @@ import { ModerationPanel } from "./components/ModerationPanel";
 import { DiscussionPanel } from "./components/DiscussionPanel";
 import { VotesPanel } from "./components/VotesPanel";
 import { WithTranslation, withTranslation } from "react-i18next";
+import LinkForm from "./components/LinkForm";
 
 interface ShowPostPageProps extends WithTranslation {
   post: Post;
@@ -37,6 +38,7 @@ interface ShowPostPageProps extends WithTranslation {
   tags: Tag[];
   votes: Vote[];
   attachments: string[];
+  projects: GitlabProject[];
 }
 
 interface ShowPostPageState {
@@ -177,6 +179,11 @@ class ShowPostPage extends React.Component<ShowPostPageProps, ShowPostPageState>
                   <ListItem>
                     <ResponseForm post={this.props.post} />
                   </ListItem>
+                  {Fider.session.user.isAdministrator && (
+                    <ListItem>
+                      <LinkForm post={this.props.post} projects={this.props.projects} />
+                    </ListItem>
+                  )}
                 </List>
               )
             ]}

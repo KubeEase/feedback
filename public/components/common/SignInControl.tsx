@@ -7,9 +7,14 @@ import { useFider } from "@fider/hooks";
 import { useTranslation } from "react-i18next";
 import { Password } from "./form/Input";
 
+interface Captcha {
+  id: string;
+  data: string;
+}
 interface SignInControlProps {
   useEmail: boolean;
   redirectTo?: string;
+  captcha?: Captcha;
 }
 
 export const SignInControl: React.FunctionComponent<SignInControlProps> = props => {
@@ -18,10 +23,17 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<Failure | undefined>(undefined);
+  const [answer, setAnswer] = useState("");
 
   const signIn = async () => {
     setError(undefined);
-    const result = await actions.signIn({ email, password });
+    const captchaID = props.captcha === undefined ? "" : props.captcha.id;
+    const result = await actions.signIn({
+      email,
+      password,
+      captchaID,
+      captchaAnswer: answer
+    });
     if (result.ok) {
       location.href = "/";
     } else if (result.error) {
@@ -87,6 +99,20 @@ export const SignInControl: React.FunctionComponent<SignInControlProps> = props 
               onChange={setPassword}
               placeholder="Password"
             />
+            {props.captcha && (
+              <>
+                <Input field="captchaID" type="hidden" value={props.captcha.id} />
+                <div className="row">
+                  <div className="col-md-6">
+                    <img src={props.captcha.data} />
+                  </div>
+                  <div className="col-md-6">
+                    <Input field="answer" value={answer} onChange={setAnswer} />
+                  </div>
+                </div>
+              </>
+            )}
+
             <Button type="submit" color="positive" disabled={email === "" || password === ""} onClick={signIn}>
               {t("menu.signIn")}
             </Button>

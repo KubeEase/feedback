@@ -52,6 +52,8 @@ export const checkAvailability = async (subdomain: string): Promise<Result<Check
 export interface SignInRequest {
   email: string;
   password: string;
+  captchaID: string;
+  captchaAnswer: string;
 }
 
 export const signIn = async (request: SignInRequest): Promise<Result> => {
@@ -107,4 +109,17 @@ export interface CreateEditOAuthConfigRequest {
 
 export const saveOAuthConfig = async (request: CreateEditOAuthConfigRequest): Promise<Result> => {
   return await http.post("/_api/admin/oauth", request);
+};
+
+export interface CreateEditGitlabConfigRequest {
+  id: number;
+  url: string;
+  path: string;
+  verifySSL: boolean;
+  username: string;
+  token: string;
+}
+
+export const saveGitlabConfig = async (request: CreateEditGitlabConfigRequest): Promise<Result> => {
+  return await http.post("/_api/admin/gitlab", request);
 };

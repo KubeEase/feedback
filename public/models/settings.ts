@@ -58,3 +58,17 @@ export interface ImageUpload {
   };
   remove: boolean;
 }
+
+export interface GitlabConfig {
+  id: number;
+  url: string;
+  path: string;
+  ssl: boolean;
+  username: string;
+  token: string;
+}
+
+export interface GitlabProject {
+  id: number;
+  path: string;
+}

@@ -5,7 +5,11 @@ import { SignInControl, TenantLogo, LegalNotice } from "@fider/components";
 import { Fider } from "@fider/services";
 import { withTranslation, WithTranslation } from "react-i18next";
 
-class SignInPage extends React.Component<WithTranslation, {}> {
+interface SignInPageProps extends WithTranslation {
+  captchaID?: string;
+  captchaData?: string;
+}
+class SignInPage extends React.Component<SignInPageProps, {}> {
   // private onEmailSent = (email: string) => {
   //   const { t } = this.props;
   //   notify.success(<span dangerouslySetInnerHTML={{ __html: t("signIn.emailSent", { email }) }} />);
@@ -39,7 +43,15 @@ class SignInPage extends React.Component<WithTranslation, {}> {
           <TenantLogo size={100} />
           {Fider.session.tenant.isPrivate ? messages.private() : messages.locked()}
         </div>
-        <SignInControl useEmail={true} redirectTo={Fider.settings.baseURL} />
+        <SignInControl
+          useEmail={true}
+          captcha={
+            this.props.captchaID !== undefined && this.props.captchaData !== undefined
+              ? { id: this.props.captchaID, data: this.props.captchaData }
+              : undefined
+          }
+          redirectTo={Fider.settings.baseURL}
+        />
         <LegalNotice />
       </div>
     );
