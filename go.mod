@@ -9,7 +9,6 @@ require (
 	github.com/goenning/imagic v0.0.1
 	github.com/goenning/letteravatar v0.0.0-20180605200324-553181ed4055
 	github.com/goenning/vat v0.1.0
-	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golangci/golangci-lint v1.21.0
 	github.com/gosimple/slug v1.9.0
 	github.com/joeshaw/envdecode v0.0.0-20190604014844-d6d9849fcc2c

@@ -38,7 +38,7 @@ func Migrate(ctx context.Context, path string) error {
 		fileName := file.Name()
 		parts := strings.Split(fileName, "_")
 		if len(parts[0]) != 12 {
-			return errors.New("migration file must have exactly 12 chars for version: '%s' is invalid.", fileName)
+			return errors.New("migration file must have exactly 12 chars for version: '%s' is invalid", fileName)
 		}
 
 		versions[i], err = strconv.Atoi(parts[0])

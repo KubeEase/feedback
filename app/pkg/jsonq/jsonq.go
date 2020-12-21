@@ -44,7 +44,7 @@ func (q *Query) String(selector string) string {
 				return ""
 			}
 			str := fmt.Sprintf("%v", obj)
-			if str != ""{
+			if str != "" {
 				return str
 			}
 

@@ -113,12 +113,15 @@ var Send = func(localName, serverAddress string, a gosmtp.Auth, from string, to 
 			return err
 		}
 		c, err = gosmtp.NewClient(conn, host)
+		if err != nil {
+			return err
+		}
 	} else {
 		c, err = gosmtp.Dial(serverAddress)
 		if err != nil {
-
+			return err
 		}
-		return err
+
 	}
 	defer c.Close()
 	if err = c.Hello(localName); err != nil {

@@ -472,8 +472,8 @@ func TestSendInvites(t *testing.T) {
 
 	worker := mock.NewWorker()
 	task := tasks.SendInvites("My Subject", "Click here: %invite%", []*models.UserInvitation{
-		&models.UserInvitation{Email: "user1@domain.com", VerificationKey: "1234"},
-		&models.UserInvitation{Email: "user2@domain.com", VerificationKey: "5678"},
+		{Email: "user1@domain.com", VerificationKey: "1234"},
+		{Email: "user2@domain.com", VerificationKey: "5678"},
 	})
 
 	err := worker.

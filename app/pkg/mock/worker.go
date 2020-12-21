@@ -12,9 +12,9 @@ import (
 
 // Worker is fake wrapper for background worker
 type Worker struct {
-	tenant   *models.Tenant
-	user     *models.User
-	baseURL  string
+	tenant  *models.Tenant
+	user    *models.User
+	baseURL string
 }
 
 func createWorker() *Worker {

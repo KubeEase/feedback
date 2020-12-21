@@ -27,9 +27,14 @@ const (
 )
 
 var (
-	RequestCtxKey     = createKey("REQUEST")
+	// RequestCtxKey context key for request
+	RequestCtxKey = createKey("REQUEST")
+	// TransactionCtxKey is a key for transaction
 	TransactionCtxKey = createKey("TRANSACTION")
-	TenantCtxKey      = createKey("TENANT")
-	UserCtxKey        = createKey("USER")
-	LogPropsCtxKey    = createKey("LOG_PROPS")
+	// TenantCtxKey is key for tenant
+	TenantCtxKey = createKey("TENANT")
+	// UserCtxKey is a key for user
+	UserCtxKey = createKey("USER")
+	// LogPropsCtxKey is a key for Logging
+	LogPropsCtxKey = createKey("LOG_PROPS")
 )

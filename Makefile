@@ -18,7 +18,8 @@ testui:
 	npx jest ./public
 lint:
 	golangci-lint run
-test: 
+test:
+	golangci-lint run
 	docker-compose -f docker-compose-test.yml up -d
 	sleep 5
 	godotenv -f .test.env go run main.go migrate
