@@ -97,10 +97,27 @@ func sendMail(ctx context.Context, c *cmd.SendMail) {
 	}
 }
 
+// SSLPort 465
+const SSLPort = "465"
+
 var Send = func(localName, serverAddress string, a gosmtp.Auth, from string, to []string, msg []byte) error {
-	host, _, _ := net.SplitHostPort(serverAddress)
-	c, err := gosmtp.Dial(serverAddress)
-	if err != nil {
+	host, port, _ := net.SplitHostPort(serverAddress)
+	var c *gosmtp.Client
+	var err error
+	if port == SSLPort {
+		conn, err := tls.Dial("tcp", serverAddress, &tls.Config{
+			InsecureSkipVerify: true,
+			ServerName:         host,
+		})
+		if err != nil {
+			return err
+		}
+		c, err = gosmtp.NewClient(conn, host)
+	} else {
+		c, err = gosmtp.Dial(serverAddress)
+		if err != nil {
+
+		}
 		return err
 	}
 	defer c.Close()
